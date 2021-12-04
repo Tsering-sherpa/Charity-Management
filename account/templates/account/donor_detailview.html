@@ -1,0 +1,88 @@
+{% extends 'account/basetemplates/admin_nav_base.html' %}
+{% load static %}
+{% block body %}
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-5">
+            <div class="col-md-5 heading-section ftco-animate text-center">
+                <h2 class="mb-4">Donor Detail</h2>
+                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there
+                    live the blind texts.</p>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-2"></div>
+            <div class="col-md-9 ftco-animate">
+                <div class="container bootstrap snippets bootdey">
+                    <div class="panel-body inf-content">
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table table-user-information">
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-user  text-primary"></span>
+                                                First Name
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{ donor_detail.user.first_name }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-cloud text-primary"></span>
+                                                Lastname
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{ donor_detail.user.last_name }}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-bookmark text-primary"></span>
+                                                Username
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{ donor_detail.user.username }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-envelope text-primary"></span>
+                                                Email
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{ donor_detail.user.email }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-envelope text-primary"></span>
+                                                Phone
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{ donor_detail.phone }}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

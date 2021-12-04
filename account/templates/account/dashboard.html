@@ -1,0 +1,265 @@
+{% extends 'account/basetemplates/admin_nav_base.html' %}
+{% load static %}
+{% if not request.user.is_staff %}
+{% if not request.user.is_superuser %}
+{% block body %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<title>Dashboard</title>
+<div class="container">
+    <!-- page title area end -->
+    <!-- sales report area start -->
+    <div class="sales-report-area sales-style-two">
+        <div class="row">
+            <div class="col-xl-3 col-ml-3 col-md-6 mt-5">
+                <div class="single-report">
+                    <div class="s-sale-inner pt--30 mb-3">
+                        <div class="s-report-title d-flex justify-content-between">
+                            <h4 class="header-title mb-0">NGO Request Status</h4>
+                        </div>
+                    </div>
+                    <canvas id="status" height="300px"></canvas>
+                </div>
+            </div>
+            <div class="col-xl-3 col-ml-3 col-md-6 mt-5">
+                <div class="single-report">
+                    <div class="s-sale-inner pt--30 mb-3">
+                        <div class="s-report-title d-flex justify-content-between">
+                            <h4 class="header-title mb-0">Work Priority</h4>
+                        </div>
+                    </div>
+                    <canvas id="priority" height="300px"></canvas>
+                </div>
+            </div>
+            <div class="col-xl-3 col-ml-3 col-md-6  mt-5">
+                <div class="single-report">
+                    <div class="s-sale-inner pt--30 mb-3">
+                        <div class="s-report-title d-flex justify-content-between">
+                            <h4 class="header-title mb-0">NGO/Donor Flow</h4>
+                        </div>
+                    </div>
+                    <canvas id="customer" height="300px"></canvas>
+                </div>
+            </div>
+            <div class="col-xl-3 col-ml-3 col-md-6 mt-5">
+                <div class="single-report">
+                    <div class="s-sale-inner pt--30 mb-3">
+                        <div class="s-report-title d-flex justify-content-between">
+                            <h4 class="header-title mb-0">New Coustomers</h4>
+                        </div>
+                    </div>
+                    <canvas id="newcustomer" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- sales report area end -->
+    <!-- visitor graph area start -->
+    <div class="card mt-5">
+        <div class="card-body">
+            <div class="d-flex justify-content-between mb-5">
+                <h4 class="header-title mb-0">Visitor Graph</h4>
+                <select class="custome-select border-0 pr-3">
+                    <option selected="">Last 7 Days</option>
+                    <option value="0">Last 7 Days</option>
+                </select>
+            </div>
+            <canvas id="visitor" height="auto" , width="auto"></canvas>
+        </div>
+    </div>
+    <!-- visitor graph area end -->
+    <!-- order list area start -->
+    <div class="card mt-5">
+        <div class="card-body">
+            <h4 class="header-title">This Month Pending NGO Request</h4>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tr>
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">NGO Name</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Request Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in today_request %}
+                        <tr>
+                            <td><a href="{% url 'detail_ngo' pk=item.id %}">{{ item.ngo_name }}</a></td>
+                            <td>{{ item.location }}</td>
+                            <td>{{ item.user.username }}</td>
+                            <td>{{ item.user.email }}</td>
+                            <td>{{ item.phone }}</td>
+                            {% if item.user.is_active %}
+                            <td style="color:green">Accepted</td>
+                            {% else %}
+                            <td style="color:red">Pending</td>
+                            {% endif %}
+                            <td><a href="{% url 'ngorequest_update' pk=item.user.id %}">
+                                <button class="btn btn-info">Update</button>
+                            </a>
+                                <a href="{% url 'delete_ngo' pk=item.id %}">
+                                    <button class="btn btn-secondary">Delete</i></button>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- order list area end -->
+</div>
+<!-- main content area end -->
+<script>
+    var ctx = document.getElementById('status').getContext('2d');
+    var status = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Pending','Accepted'],
+        datasets: [{
+            label: '# of Request Status',
+            data: [{{pending}},{{accepted}}],
+            backgroundColor: [
+                'rgba(255, 99, 132, 10)',
+                'rgba(54, 162, 235, 10)',
+                'rgba(255, 206, 86, 10)',
+                'rgba(75, 192, 192, 10)',
+                'rgba(153, 102, 255, 10)',
+                'rgba(255, 159, 64, 10)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+var ctx = document.getElementById('priority').getContext('2d');
+    var priority = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['High','Medium', 'Low'],
+        datasets: [{
+            label: 'Work Priority',
+            data: [20,52,47],
+            backgroundColor: [
+                'rgba(225, 88, 150, 10)',
+                'rgba(54, 162, 205, 10)',
+                'rgba(255, 206, 76, 10)',
+                'rgba(75, 192, 190, 10)',
+                'rgba(153, 102, 250, 10)',
+                'rgba(255, 159, 60, 10)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+    var ctx = document.getElementById('customer').getContext('2d');
+    var customer = new Chart(ctx, {
+    type: 'polarArea',
+    data: {
+        labels: ['Donor','NGO'],
+        datasets: [{
+            label: 'of customer worker ratio',
+            data: [{{donor}},{{ngo}}],
+            backgroundColor: [
+                'rgba(225, 88, 150, 10)',
+                'rgba(54, 162, 205, 10)',
+                'rgba(255, 206, 76, 10)',
+                'rgba(75, 192, 190, 10)',
+                'rgba(153, 102, 250, 10)',
+                'rgba(255, 159, 60, 10)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+    var ctx = document.getElementById('visitor').getContext('2d');
+    var visitor = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+        datasets: [{
+            label: 'of customer worker ratio',
+            data: [20,23,12,49,34,45,20],
+            backgroundColor: [
+                'rgba(225, 88, 150, 10)',
+                'rgba(54, 162, 205, 10)',
+                'rgba(255, 206, 76, 10)',
+                'rgba(75, 192, 190, 10)',
+                'rgba(153, 102, 250, 10)',
+                'rgba(255, 159, 60, 10)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+{% endblock %}
+{% endif %}
+{% endif %}

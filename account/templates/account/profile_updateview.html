@@ -1,0 +1,17 @@
+{% extends 'account/basetemplates/admin_nav_base.html' %}
+{% load bootstrap %}
+{% block body %}
+    <title>Profile</title>
+    <div class="container" style="align-content: center">
+        <div class="card-body">
+            <div class="signup-form" style="padding-top: 20px;">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{user_form |bootstrap}}
+                    {{profile_form |bootstrap}}
+                    <button type="submit" class="btn btn-success btn-block">Update</button>
+                  </form>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

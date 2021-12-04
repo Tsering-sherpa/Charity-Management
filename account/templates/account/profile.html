@@ -1,0 +1,166 @@
+{% extends 'account/basetemplates/admin_nav_base.html' %}
+{% load static %}
+{% block body %}
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+            <div class="col-md-5 heading-section ftco-animate text-center">
+                <h2 class="mb-4">Profile Detail</h2>
+                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there
+                    live the blind texts.</p>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-2"></div>
+            <div class="col-md-9 ftco-animate">
+                <div class="container bootstrap snippets bootdey">
+                    <div class="panel-body inf-content">
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table table-user-information">
+                                    <tbody>
+                                    {% if not request.user.is_staff %}
+                                    <tr class="text-center">
+                                           <img class="rounded-circle" style="width: 15rem;" src="{{ user.customerprofile.profile.url }}">
+                                    </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-user  text-primary"></span>
+                                                First Name
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{ user.first_name }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-cloud text-primary"></span>
+                                                Lastname
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{ user.last_name }}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-bookmark text-primary"></span>
+                                                Username
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{ user.username }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-envelope text-primary"></span>
+                                                Email
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{ user.email }}
+                                        </td>
+                                    </tr>
+                                    {% if request.user.is_staff and not user.is_superuser %}
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-envelope text-primary"></span>
+                                                Phone
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{ user.userprofile.phone }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                                Personal Account Number
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{ user.userprofile.pan }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                                Location
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{ user.userprofile.location }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-eye-open text-primary"></span>
+                                                Documents
+                                            </strong>
+                                        </td>
+
+                                        <td class="text-primary">
+                                            <span class="pull-right">
+                                                <a href="{{ user.userprofile.document.url }}"
+                                                   class="btn btn-primary">View Document</a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    {% elif not request.user.is_staff %}
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-eye-open text-primary"></span>
+                                                Birthdate
+                                            </strong>
+                                        </td>
+
+                                        <td class="text-primary">
+                                            <span class="pull-right">
+                                                {{ user.customerprofile.birthdate }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-eye-open text-primary"></span>
+                                                Phone
+                                            </strong>
+                                        </td>
+
+                                        <td class="text-primary">
+                                            <span class="pull-right">
+                                                {{ user.customerprofile.phone }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                                {% if request.user.is_staff and not request.user.is_superuser %}
+                                <a href="{% url 'update_ngo' %}" class="btn btn-primary">Update Details</a>
+                                {% else %}
+                                <a href="{% url 'update_donor' %}" class="btn btn-primary">Update Details</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

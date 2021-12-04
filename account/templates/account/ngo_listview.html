@@ -1,0 +1,54 @@
+{% extends 'account/basetemplates/admin_nav_base.html' %}
+{% load static %}
+{% block body %}
+<!-- page title area end -->
+<div class="container">
+    <div class="row justify-content-center mb-0 pb-7">
+        <div class="col-md-5 heading-section ftco-animate text-center">
+            <h2 class="mb-4">NGOs List</h2>
+            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there
+                live the blind texts.</p>
+        </div>
+    </div>
+    <table class="table table-hover">
+        <tr>
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">NGO Name</th>
+                <th scope="col">Location</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Request Status</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in ngo %}
+            <tr>
+                <td><a href="{% url 'detail_ngo' pk=item.id %}">{{ item.ngo_name }}</a></td>
+                <td>{{ item.location }}</td>
+                <td>{{ item.user.username }}</td>
+                <td>{{ item.user.email }}</td>
+                <td>{{ item.phone }}</td>
+                {% if item.user.is_active %}
+                <td style="color:green">Accepted</td>
+                {% else %}
+                <td style="color:red">Pending</td>
+                {% endif %}
+                <td><a href="{% url 'ngorequest_update' pk=item.user.id %}">
+                    <button class="btn btn-info">Update</button>
+                </a>
+                    <a href="{% url 'delete_ngo' pk=item.id %}">
+                        <button class="btn btn-secondary">Delete</i></button>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+    </table>
+</div>
+{% if is_paginated %}
+{% include "pagination.html" %}
+{% endif %}
+{% endblock %}

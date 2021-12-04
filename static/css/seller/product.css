@@ -1,0 +1,15 @@
+.container {
+	margin-top: 100px;
+}
+
+.col-md-7 h2 {
+
+	color: #555;
+}
+
+.price {
+	color: #FE980F;
+	font-size: 26px;
+	font-weight: bold;
+
+}

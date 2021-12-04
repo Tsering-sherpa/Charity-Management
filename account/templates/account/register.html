@@ -1,0 +1,85 @@
+{% extends 'account/basetemplates/account_admin_base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block body %}
+    <title>NGO Register</title>
+    <div class="main">
+        <!-- Sign up form -->
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h2 class="form-title"><u>Sign up</u></h2>
+                        <form method="POST" class="register-form" enctype="multipart/form-data" id="register-form" action="{% url 'signup' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="name"><i class='fa fa-user'></i></label>
+                                {% render_field form.first_name class="input" placeholder="Your First Name.." %}
+                            </div>
+                            <div class="form-group">
+                                <label for="name"><i class='fa fa-user'></i></label>
+                                {% render_field form.last_name class="input" placeholder="Your Last Name.." %}
+                            </div>
+                            <div class="form-group">
+                                <label for="name"><i class='fa fa-user'></i></label>
+                                {% render_field form.username class="input" placeholder="Your Username.." %}
+                            </div>
+                            <p style="color: #e72734">{{ form.username.errors }}</p>
+                            <div class="form-group">
+                                <label for="email"><i class="fa">&#xf0e0;</i></label>
+                                {% render_field form.email class="input" placeholder="Your Email.." %}
+                            </div>
+                            <p style="color: #e72734">{{ form.email.errors }}</p>
+                            <div class="form-group">
+                                <label for="pass"><i class='fa fa-key'></i></label>
+                                {% render_field form.password1 class="input" placeholder="Your Password.." %}
+                            </div>
+                            <p style="color: #e72734">{{ form.password1.errors }}</p>
+                            <div class="form-group">
+                                <label for="re-pass"><i class='fa fa-lock'></i></label>
+                                {% render_field form.password2 class="input" placeholder="Confirm Password.." %}
+                            </div>
+                            <p style="color: #e72734">{{ form.password2.errors }}</p>
+                            <div class="form-group">
+                                <label for="name"><i class='fa fa-building'></i></label>
+                                {% render_field business_from.ngo_name class="input" placeholder="Your NGO Name.." %}
+                            </div>
+                            <div class="form-group">
+                                <label for="name"><i class="fa">&#xf041;</i></label>
+                                {% render_field business_from.location class="input" placeholder="Your NGO Location.." %}
+                            </div>
+                            <div class="form-group">
+                                <label for="name"><i class="fa">&#xf2c2;</i></label>
+                                {% render_field business_from.pan class="input" placeholder="Your PAN.." %}
+                            </div>
+                            <p style="color: #e72734">{{ business_from.pan.errors }}</p>
+                            <div class="form-group">
+                                <label for="name"><i class="fa">&#xf095;</i></label>
+                                {% render_field business_from.phone class="input" placeholder="Your Phone Number.." %}
+                            </div>
+                            <p style="color: #e72734">{{ business_from.phone.errors }}</p>
+                            <div class="form-group">
+                                <label for="name"><i class="fa fa-file">;</i></label>
+                                {% render_field business_from.document class="input" %}
+                            </div>
+                            <p style="color: #e72734">{{ business_from.document.errors }}</p>
+                            <div class="form-group">
+                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" required/>
+                                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all
+                                    statements in <a href="/policy" class="term-service">Terms of service</a></label>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" class="form-submit" value="Register"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="signup-image">
+                        <figure><img src="{% static '/images/register/signup-image.jpg' %}" alt="sing up image">
+                        </figure>
+                        <a href="/login/" class="signup-image-link">Already have an Account</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

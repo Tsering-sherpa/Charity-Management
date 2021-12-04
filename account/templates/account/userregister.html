@@ -1,0 +1,77 @@
+{% extends 'account/basetemplates/account_admin_base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block body %}
+    <div class="main">
+        <!-- Sign up form -->
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h2 class="form-title"><u>Sign up</u></h2>
+                        <form method="POST" class="register-form" id="register-form" action="{% url 'register' %}" >
+                            {% csrf_token %}
+                            <p class="label">First Name</p>
+                            <div class="form-group">
+                                <label for="name"><i class='fa'>&#xf007;</i></label>
+                                {% render_field customer.first_name class="input" placeholder="Your First Name.." %}
+                            </div>
+                            <p class="label">Last Name</p>
+                            <div class="form-group">
+                                <label for="name"><i class='fa'>&#xf007;</i></label>
+                                {% render_field customer.last_name class="input" placeholder="Your Last Name.." %}
+                            </div>
+                            <p class="label">User Name</p>
+                            <div class="form-group">
+                                <label for="name"><i class='fa fa-user'></i></label>
+                                {% render_field customer.username class="input" placeholder="Your Username..." %}
+                            </div>
+                            {{customer.username.errors}}
+                            <p class="label">Email</p>
+                            <div class="form-group">
+                                <label for="email"><i class="fa">&#xf0e0;</i></label>
+                                 {% render_field customer.email class="input" placeholder="Your Email..." %}
+                            </div>
+                            {{customer.email.errors}}
+                            <p class="label">Password</p>
+                            <div class="form-group">
+                                <label for="pass"><i class='fas'>&#xf084;</i></label>
+                                {% render_field customer.password1 class="input" placeholder="Enter Your Passwowrd..." %}
+                            </div>
+                            {{customer.password1.errors}}
+                            <p class="label">Confirm Password</p>
+                            <div class="form-group">
+                                <label for="re-pass"><i class='fas'>&#xf023;</i></label>
+                                 {% render_field customer.password2 class="input" placeholder="Re-Enter Your Password..." %}
+                            </div>
+                            {{customer.password2.errors}}
+                            <p class="label">Phone</p>
+                            <div class="form-group">
+                                <label for="name"><i class="fa">&#xf095;</i></label>
+                                {% render_field customer_form.phone class="input" placeholder="Your Phone Number.." %}
+                            </div>
+                            {{customer_form.phone.errors}}
+                            <p class="label">BirthDate</p>
+                            <div class="form-group" >
+                                <label for="name"><i class='far'>&#xf073;</i></label>
+                                {% render_field customer_form.birthdate class="input" type="date" %}
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" required />
+                                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="/policy" class="term-service">Terms of service</a></label>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" class="form-submit" value="Register"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="signup-image">
+                        <figure><img src="{% static '/images/register/signup-image.jpg' %}" alt="sing up image"></figure>
+                        <a href="/login/" class="signup-image-link">Already have an Account</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}
+

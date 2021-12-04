@@ -1,0 +1,66 @@
+{% extends 'account/basetemplates/admin_nav_base.html' %}
+{% load static %}
+{% block body %}
+<title>New Cause</title>
+<div class="container">
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center mb-5 pb-3">
+                <div class="col-md-5 heading-section ftco-animate text-center">
+                    <h2 class="mb-4">History List</h2>
+                </div>
+            </div>
+            <table class="table table-hover">
+                <tr>
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">History Name</th>
+                        <th scope="col">Field</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">User</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if request.user.is_superuser %}
+                    {% for item in history %}
+                    <tr>
+                        <td>{{ item }}</td>
+                        <td>{{ item.field_name }}</td>
+                        <td>{{ item.date_created }}</td>
+                        <td>{{ item.user }}</td>
+                        <td>
+                        <a href="{% url 'delete_history' pk=item.id %}">
+                            <button class="btn btn-secondary">Delete</i></button>
+                        </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    {% for item in history %}
+                    {% if item.user == request.user %}
+                    <tr>
+                        <td>{{ item }}</td>
+                        <td>{{ item.field_name }}</td>
+                        <td>{{ item.date_created }}</td>
+                        <td>{{ item.user }}</td>
+                        <td>
+                        <a href="{% url 'delete_history' pk=item.id %}">
+                            <button class="btn btn-secondary">Delete</i></button>
+                        </a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                    </tbody>
+            </table>
+            {% if is_paginated %}
+            {% include "account/basetemplates/pagination.html" %}
+            {% endif %}
+        </div>
+    </section>
+
+</div>
+{% endblock %}
